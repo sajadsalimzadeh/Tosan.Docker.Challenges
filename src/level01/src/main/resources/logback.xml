@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="ROOT_LEVEL" value="WARN"/>
+    <property name="APPLICATION_LEVEL" value="INFO"/>
+    <property name="STACK_TRACE_COUNT" value="10"/>
+    <property name="CLASS_NAME_LENGTH" value="40"/>
+
+    <property name="PATTERN" scope="context"
+              value="%date{ISO8601} %-7([%level]) requestId:[%mdc{request.id}]:%mdc{request.status} thread:[%-25.25(%thread)] clientIP:[%mdc{clientIP}] %logger{${CLASS_NAME_LENGTH}}.%method@%line:%n    %message %rootException{${STACK_TRACE_COUNT}}%n"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/var/log/challenge/challenge.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>/var/log/challenge/challenge.%d{yyyy-MM-dd_HH}.%i.log.zip</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="tosan.dockerchallengs" level="${APPLICATION_LEVEL}"/>
+    <logger name="org.springframework" level="${ROOT_LEVEL}"/>
+    <logger name="org.apache" level="ERROR"/>
+
+    <root level="${ROOT_LEVEL}">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ROLLING"/>
+    </root>
+</configuration>
