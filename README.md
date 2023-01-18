@@ -51,7 +51,12 @@ java -jar target/challenge.war
 ```bash
 docker run -p 8080:9001 -e DOCKER_CHALLENGES_SERVER_PORT=9001 challenge-levelx
 ```
-## Environment Variables
+## Options and Environment Variables
+
+if run directly with war file you can set -D flag with server.port
+```
+java -jar -Dserver.port=4815 challenge.war
+```
 
 To run this project, you will need to add the following environment variables to your .env file or run container by -e flag
 
