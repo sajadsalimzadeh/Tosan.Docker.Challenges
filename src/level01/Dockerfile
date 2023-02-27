@@ -4,4 +4,6 @@ ADD target/*.war /app/
 
 WORKDIR /app/
 
+EXPOSE 8080
+
 CMD ["java", "-jar", "challenge.war"]
